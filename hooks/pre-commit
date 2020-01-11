@@ -1,0 +1,25 @@
+#!/bin/bash
+# Ref: https://gist.github.com/julienwolflisberg/9659899
+
+black=$(black .)
+
+if [[ -z $black ]]
+then
+	echo "> Black passed !"
+else
+	echo "> Black DID NOT pass !"
+	echo "$black" | colordiff
+	exit 1
+fi
+
+`python -m unittest discover`
+if [[ $? = 0 ]]
+then
+	echo "> Tests passed !"
+else
+	echo "> Tests DID NOT pass !"
+	exit 1
+fi
+
+echo "Ready to commit !"
+exit 0
